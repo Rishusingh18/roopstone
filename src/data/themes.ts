@@ -11,14 +11,13 @@ export interface ThemeConfig {
   priority: number;
 }
 
-// Config-Driven Themes for Home Page features
 export const activeThemes: ThemeConfig[] = [
   {
     id: "diwali_2026",
     name: "Diwali Special",
     startDate: "2026-10-15T00:00:00Z",
     endDate: "2026-11-10T00:00:00Z",
-    heroImage: "/themes/diwali-hero.jpg",
+    heroImage: "/images/products/16.jpg",
     overlayTextHeading: "Illuminate Your Devotion",
     overlayTextSubheading: "Exclusive Diwali Collections by Roop Stone Arts",
     ctaText: "Explore Diwali Collection",
@@ -30,11 +29,11 @@ export const activeThemes: ThemeConfig[] = [
     name: "Standard Heritage Theme",
     startDate: null,
     endDate: null,
-    heroImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop", // Using high-end placeholder for now
-    overlayTextHeading: "Where Stones become Poetry",
-    overlayTextSubheading: "Premium marble brand rooted in over three decades of craftsmanship.",
-    ctaText: "View Our Legacy",
-    ctaLink: "/legacy-works",
+    heroImage: "/images/products/11.jpg", 
+    overlayTextHeading: "Your Spiritual Connection, Made Simple",
+    overlayTextSubheading: "A premium marble brand offering exquisite handcrafted temples for every home and budget.",
+    ctaText: "Explore Our Collections",
+    ctaLink: "/collections",
     priority: 1
   }
 ];
