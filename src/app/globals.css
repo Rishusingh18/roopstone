@@ -1,11 +1,17 @@
 :root {
-  --color-primary: #1F2228; /* deep slate */
-  --color-secondary: #D4AF37; /* subtle gold */
-  --color-accent: #EAE6DE; /* warm marble cream */
-  --color-background: #FAFAFA; /* pristine white/gray */
-  --color-text: #333333;
-  --font-heading: 'Playfair Display', serif;
-  --font-body: 'Inter', sans-serif;
+  --color-primary: #77592c; /* Bronze/gold accent */
+  --color-primary-container: #c19c69;
+  --color-secondary: #735a34;
+  --color-secondary-container: #fddaab;
+  --color-background: #fff9ea; /* Cream foundation */
+  --color-text: #1e1c12; /* Deep charcoal */
+  --color-surface: #fff9ea;
+  --color-surface-low: #f9f3e3;
+  --color-surface-lowest: #ffffff;
+  --color-outline: #807569;
+  --color-outline-variant: #d2c4b6;
+  --font-heading: var(--font-heading), 'Noto Serif', serif;
+  --font-body: var(--font-body), 'Manrope', sans-serif;
 }
 
 * {
@@ -30,6 +36,7 @@ a {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: 600;
-  color: var(--color-primary);
+  font-weight: 400;
+  color: var(--color-text);
+  letter-spacing: 0.05em;
 }
