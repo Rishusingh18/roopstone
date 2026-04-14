@@ -6,12 +6,19 @@
   --color-background: #fff9ea; /* Cream foundation */
   --color-text: #1e1c12; /* Deep charcoal */
   --color-surface: #fff9ea;
-  --color-surface-low: #f9f3e3;
+  --color-surface-low: #f4eede;
+  --color-surface-high: #eee8d8;
+  --color-surface-highest: #e8e2d2;
   --color-surface-lowest: #ffffff;
   --color-outline: #807569;
   --color-outline-variant: #d2c4b6;
-  --font-heading: var(--font-heading), 'Noto Serif', serif;
-  --font-body: var(--font-body), 'Manrope', sans-serif;
+  
+  --font-heading: 'Noto Serif', serif;
+  --font-body: 'Manrope', sans-serif;
+  
+  --transition-slow: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-med: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -27,6 +34,8 @@ body {
   background-color: var(--color-background);
   color: var(--color-text);
   font-family: var(--font-body);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
@@ -40,3 +49,152 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-text);
   letter-spacing: 0.05em;
 }
+
+/* Typography Utilities */
+.display-lg { font-size: 5.5rem; line-height: 1.1; letter-spacing: -0.02em; }
+.display-md { font-size: 4rem; line-height: 1.1; }
+.display-sm { font-size: 2.5rem; line-height: 1.2; }
+.headline-lg { font-size: 3rem; line-height: 1.2; }
+.label-md { 
+  font-size: 0.85rem; 
+  text-transform: uppercase; 
+  letter-spacing: 0.25em; 
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+/* Tonal Layering & No-Line Utilities */
+.surface-low { background-color: var(--color-surface-low); }
+.surface-high { background-color: var(--color-surface-high); }
+.surface-highest { background-color: var(--color-surface-highest); }
+.surface-lowest { background-color: var(--color-surface-lowest); }
+
+/* Decorative Utilities */
+.glass-blur {
+  background-color: rgba(255, 249, 234, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.asymmetric-tile {
+  border-top-left-radius: 120px;
+  border-bottom-right-radius: 120px;
+  overflow: hidden;
+  transition: var(--transition-med);
+}
+
+.asymmetric-tile:hover {
+  transform: translateY(-8px);
+}
+
+.bronze-luster {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-container) 100%);
+  position: relative;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+}
+
+.bronze-luster::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  transform: rotate(45deg);
+  animation: luster-sweep 4s infinite linear;
+}
+
+@keyframes luster-sweep {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) rotate(45deg); }
+}
+
+/* Animation Utilities - Safely Visible by Default */
+.reveal-hidden {
+  opacity: 1;
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+/* We still use reveal-visible as a hook for motion, but not for base visibility */
+.reveal-visible {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+/* Weighted Asymmetry */
+.weighted-asymmetry {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  align-items: center;
+  gap: 8vw;
+}
+
+.luxury-input {
+  transition: border-bottom-color 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.luxury-input:focus {
+  border-bottom-color: var(--color-primary) !important;
+}
+
+.luxury-input::placeholder {
+  color: var(--color-outline-variant);
+  transition: opacity 0.5s ease;
+}
+
+.luxury-input:focus::placeholder {
+  opacity: 0.3;
+}
+
+/* Cursor Interactivity */
+.cursor-dot.active {
+  transform: scale(3);
+  background-color: var(--color-primary);
+  mix-blend-mode: difference;
+}
+
+.cursor-follower.active {
+  transform: translate(-50%, -50%) scale(1.5);
+  border-color: var(--color-primary);
+  opacity: 0.2;
+}
+
+/* Performance Optimized Parallax Container */
+.parallax-container {
+  will-change: transform;
+}
+
+/* Section Transitions */
+.surface-transition {
+  transition: background-color 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (max-width: 1024px) {
+  .weighted-asymmetry {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+}
+
+/* Advanced Reveal States - Now with Opacity 1 for Default Visibility */
+.reveal-up { transform: translateY(40px); opacity: 1; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal-scale { transform: scale(0.98); opacity: 1; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal-left { transform: translateX(-30px); opacity: 1; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+
+.reveal-visible.reveal-up { transform: translateY(0) !important; }
+.reveal-visible.reveal-scale { transform: scale(1) !important; }
+.reveal-visible.reveal-left { transform: translateX(0) !important; }
+
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+
+/* Parallax Container */
+.parallax-container {
+  will-change: transform;
+}
+
