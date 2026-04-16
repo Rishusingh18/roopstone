@@ -1,357 +1,399 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
-import FloatingNav from '@/components/FloatingNav';
-import GalleryTile from '@/components/GalleryTile';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
-  const [scrollPos, setScrollPos] = useState(0);
-  const [bgShade, setBgShade] = useState('var(--color-background)');
-  
-  const heroRef = useRef<HTMLElement>(null);
-  const craftRef = useRef<HTMLElement>(null);
-  const brandsRef = useRef<HTMLElement>(null);
-  const inquiryRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     setMounted(true);
-    
-    const handleScroll = () => {
-      setScrollPos(window.scrollY);
-      if (window.scrollY > 1500) {
-        setBgShade('var(--color-surface-container-high)');
-      } else if (window.scrollY > 600) {
-        setBgShade('var(--color-surface-container-low)');
-      } else {
-        setBgShade('var(--color-background)');
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
   }, []);
 
-  return (
-    <main style={{ 
-      backgroundColor: bgShade, 
-      color: 'var(--color-text)', 
-      transition: 'background-color 1.2s cubic-bezier(0.2, 0.8, 0.2, 1)',
-      position: 'relative'
-    }}>
-      <FloatingNav />
+  if (!mounted) return null;
 
-      {/* Hero Section */}
-      <section 
-        ref={heroRef}
-        style={{
-          height: '100vh',
-          minHeight: '800px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          padding: '12rem 8vw 0',
-          position: 'relative',
-          overflow: 'hidden'
-        }}
-      >
-        <div 
-          className="reveal-hidden hero-element"
-          style={{
-            position: 'absolute',
-            top: '0',
-            right: '0',
-            width: '65vw',
-            height: '100vh',
-            backgroundImage: `url('/images/hero.png')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            zIndex: 0,
-            opacity: 0.95,
-            transform: `translateY(${scrollPos * 0.2}px)`,
-          }}
-        >
+  return (
+    <main style={{ minHeight: '100vh', backgroundColor: 'var(--color-background)', color: 'var(--color-text)' }}>
+      {/* Hero Section: The Architectural Monolith */}
+      <section style={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        padding: '0 5vw',
+        position: 'relative'
+      }}>
+        {/* Asymmetrical float image */}
+        <div style={{
+          position: 'absolute',
+          top: '15vh',
+          right: '5vw',
+          width: '50vw',
+          height: '70vh',
+          backgroundImage: `url('/images/products/3.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          zIndex: 0,
+          borderTopLeftRadius: '100px', // Asymmetrical gallery tile
+          borderBottomRightRadius: '100px'
+        }}>
+          {/* Subtle soft gradient overlay to tie into background */}
           <div style={{
             position: 'absolute', inset: 0,
-            background: 'linear-gradient(to right, var(--color-background) 0%, transparent 50%), linear-gradient(to top, var(--color-background) 0%, transparent 20%)'
+            background: 'linear-gradient(to left, transparent 0%, var(--color-background) 100%)',
+            borderTopLeftRadius: '100px',
+            borderBottomRightRadius: '100px'
           }} />
         </div>
 
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: '900px' }}>
-          <p className="label-md reveal-hidden hero-element" style={{ transitionDelay: '0.2s' }}>EST. 1993 | MAKRANA, RAJASTHAN</p>
-          <h1 className="display-lg reveal-hidden hero-element" style={{ margin: '1.5rem 0 3.5rem', transitionDelay: '0.4s' }}>
-            Where <span style={{ fontFamily: 'var(--font-heading)', fontStyle: 'italic', fontWeight: '300' }}>Stone</span> <br/> Becomes Poetry
-          </h1>
-          <p className="reveal-hidden hero-element" style={{
-            fontSize: '1.4rem',
-            lineHeight: '1.8',
-            color: 'var(--color-outline)',
-            marginBottom: '4.5rem',
-            maxWidth: '600px',
-            transitionDelay: '0.6s'
-          }}>
-            For three decades, Roop Stone Arts has curated the earth’s most timeless medium. From the sacred white marble of Makrana to the brutalist strength of granite.
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: '800px', marginTop: '10vh' }}>
+          <p className="brand-subtitle" style={{ marginBottom: '1.5rem' }}>
+            Roop Stone Arts
           </p>
-          
-          <div className="reveal-hidden" style={{ transitionDelay: '0.8s' }}>
-            <Link href="#brands" className="bronze-luster" style={{
-              display: 'inline-block',
-              padding: '1.5rem 4rem',
-              color: '#fff',
-              fontSize: '0.85rem',
-              letterSpacing: '0.25em',
-              textTransform: 'uppercase',
-              fontWeight: '600',
-              boxShadow: '0 12px 40px rgba(119, 89, 44, 0.3)'
+          <h1 style={{ marginBottom: '2rem' }}>
+            Where Stones <br/> Become Poetry
+          </h1>
+          <p style={{
+            fontSize: '1.25rem',
+            lineHeight: '1.6',
+            color: 'var(--color-outline)',
+            marginBottom: '3rem',
+            maxWidth: '450px'
             }}>
-              Explore Our Brands
+            An enduring dialogue between nature and space. Our craftsmen listen to the rhythm of the veins, the weight of the density, and the song of the texture.
+          </p>
+
+          <Link href="/collections" style={{
+            display: 'inline-block',
+            padding: '1rem 2.5rem',
+            background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-container) 100%)',
+            color: '#fff',
+            fontSize: '0.9rem',
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            borderRadius: '4px',
+            boxShadow: '0 12px 40px rgba(119, 89, 44, 0.15)',
+            textDecoration: 'none',
+            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 15px 45px rgba(119, 89, 44, 0.25)';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 12px 40px rgba(119, 89, 44, 0.15)';
+          }}>
+            View All Collections
+          </Link>
+        </div>
+      </section>
+
+      {/* Curated Series / Tonal Layering Section */}
+      <section style={{ 
+        padding: '15rem 5vw', 
+        backgroundColor: 'var(--color-surface-low)', // Now white, relies on padding/white-space
+      }}>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-end',
+          marginBottom: '5rem'
+        }}>
+          <h2 style={{ fontSize: '3.5rem', maxWidth: '500px', lineHeight: '1.2' }}>
+            Curated Series from <br/> our Master Archives
+          </h2>
+          <p style={{ fontSize: '1.1rem', maxWidth: '300px', color: 'var(--color-outline)', textAlign: 'right' }}>
+            Discover the textures that have shaped eras.
+          </p>
+        </div>
+
+        <div style={{ display: 'flex', gap: '3rem', overflowX: 'auto', paddingBottom: '2rem' }}>
+          {[
+            { img: '1.jpg', title: 'Imperial Quartzite' },
+            { img: '15.jpg', title: 'Midnight Onyx' },
+            { img: '5.jpg', title: 'Tuscan Travertine' },
+            { img: '13.jpg', title: 'Aegean Marble' },
+          ].map((cat, idx) => (
+            <div key={idx} style={{ 
+              minWidth: '350px', 
+              cursor: 'pointer',
+              position: 'relative'
+             }}>
+              <div style={{
+                height: '480px',
+                backgroundImage: `url('/images/products/${cat.img}')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                borderTopLeftRadius: '60px',
+                borderBottomRightRadius: '60px',
+                boxShadow: '0 12px 40px rgba(30, 28, 18, 0.06)', // Ambient shadow spec
+                transition: 'all 0.5s ease'
+              }}
+              className="gallery-tile"
+              onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-10px)'} 
+              onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+                
+                {/* Glassmorphism Title Overlay */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: '2rem',
+                  left: '2rem',
+                  right: '2rem',
+                  backgroundColor: 'rgba(255, 255, 255, 0.7)', // surface with opacity
+                  backdropFilter: 'blur(20px)',
+                  padding: '1.5rem',
+                  borderRadius: '12px',
+                  boxShadow: '0 10px 30px rgba(0,0,0,0.05)'
+                }}>
+                  <h3 style={{ fontSize: '1.3rem', color: 'var(--color-text)', letterSpacing: '0.05em' }}>
+                    {cat.title}
+                  </h3>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+      
+      {/* IRA: The Modern Art Gallery (Weighted Asymmetry) */}
+      <section style={{ 
+        padding: '15rem 5vw', 
+        display: 'flex', 
+        flexDirection: 'column',
+        gap: '8rem'
+      }}>
+        <div style={{ display: 'flex', gap: '5vw', alignItems: 'center' }}>
+          <div style={{ flex: '1.2' }}>
+            <div style={{
+              height: '80vh',
+              backgroundImage: `url('/images/products/12.jpg')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              borderTopLeftRadius: '200px',
+              borderBottomRightRadius: '40px',
+              boxShadow: '0 40px 100px rgba(30, 28, 18, 0.1)'
+            }} />
+          </div>
+          <div style={{ flex: '1', paddingLeft: '2rem' }}>
+            <p className="brand-subtitle" style={{ color: 'var(--color-primary)', marginBottom: '1rem' }}>The Collection</p>
+            <h2 style={{ fontSize: '4rem', marginBottom: '2.5rem', lineHeight: '1' }}>
+              IRA. <br/>
+              Sculpted <br/>
+              Stillness.
+            </h2>
+            <p style={{ fontSize: '1.2rem', color: 'var(--color-outline)', lineHeight: '1.8', marginBottom: '3rem', maxWidth: '400px' }}>
+              Our IRA series redefines marble as a medium of modern art. Each piece is a singular dialogue between the raw tectonic force of the earth and the delicate touch of the artisan.
+            </p>
+            <Link href="/ira" style={{
+              fontSize: '0.9rem',
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase',
+              color: 'var(--color-text)',
+              borderBottom: '1px solid var(--color-primary)',
+              paddingBottom: '0.5rem',
+              fontWeight: '600'
+            }}>
+              Explore Artworks
+            </Link>
+          </div>
+        </div>
+
+        {/* Supporting imagery grid */}
+        <div style={{ display: 'flex', gap: '3rem', alignItems: 'flex-start' }}>
+          <div style={{ flex: '1', marginTop: '5rem' }}>
+            <div style={{
+              height: '500px',
+              backgroundImage: `url('/images/products/6.jpg')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              borderTopLeftRadius: '120px',
+              boxShadow: '0 20px 60px rgba(30, 28, 18, 0.05)'
+            }} />
+            <p style={{ marginTop: '2rem', fontSize: '0.9rem', color: 'var(--color-outline)', fontStyle: 'italic' }}>
+              01. The Tectonic Rift - White Statuario
+            </p>
+          </div>
+          <div style={{ flex: '1' }}>
+            <div style={{
+              height: '600px',
+              backgroundImage: `url('/images/products/17.jpg')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              borderBottomRightRadius: '120px',
+              boxShadow: '0 20px 60px rgba(30, 28, 18, 0.05)'
+            }} />
+            <p style={{ marginTop: '2rem', fontSize: '0.9rem', color: 'var(--color-outline)', fontStyle: 'italic' }}>
+              02. Fluid Architecture - Grey Travertine
+            </p>
+          </div>
+        </div>
+      </section>
+      
+      {/* Sparsh: Sacred Spaces (Centered & Balanced) */}
+      <section style={{ 
+        padding: '15rem 5vw', 
+        textAlign: 'center',
+        backgroundColor: '#fafafa' // Very subtle distinction for sacred space
+      }}>
+        <p className="brand-subtitle" style={{ color: 'var(--color-primary)', marginBottom: '1.5rem' }}>Sacred Heritage</p>
+        <h2 style={{ fontSize: '3.5rem', marginBottom: '3rem', maxWidth: '800px', margin: '0 auto 3rem auto' }}>
+          SPARSH. Crafting the <br/> Sanctuary within.
+        </h2>
+        <p style={{ fontSize: '1.2rem', color: 'var(--color-outline)', lineHeight: '1.8', marginBottom: '5rem', maxWidth: '600px', margin: '0 auto 5rem auto' }}>
+          Custom-crafted marble mandirs and devotional spaces that combine geometric precision with spiritual resonance. A legacy of piety, carved for eternity.
+        </p>
+        
+        <div style={{
+          position: 'relative',
+          width: '100%',
+          height: '90vh',
+          backgroundImage: `url('/images/products/4.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          borderRadius: '4px',
+          boxShadow: '0 50px 120px rgba(0,0,0,0.1)'
+        }}>
+          {/* Symmetrical white overlay for centered focus */}
+          <div style={{
+            position: 'absolute',
+            bottom: '4rem',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            backdropFilter: 'blur(20px)',
+            padding: '3rem 5rem',
+            borderRadius: '4px',
+            textAlign: 'center',
+            maxWidth: '500px'
+          }}>
+            <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem' }}>The Temple at Ajmer</h3>
+            <p style={{ fontSize: '0.9rem', color: 'var(--color-outline)', marginBottom: '2rem' }}>A masterpiece in Makrana Pure White marble, featuring hand-carved intricate jaalis and floral motifs.</p>
+            <Link href="/sparsh" style={{
+              display: 'inline-block',
+              padding: '1rem 2rem',
+              border: '1px solid var(--color-primary)',
+              color: 'var(--color-primary)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              fontSize: '0.85rem'
+            }}>
+              View Sparsh Collection
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Legacy Section */}
-      <section 
-        id="legacy"
-        ref={craftRef}
-        style={{ padding: '15vw 8vw', minHeight: '100vh' }}
-      >
-        <div className="weighted-asymmetry">
-          <div className="reveal-hidden">
-             <p className="label-md" style={{ marginBottom: '1.5rem' }}>Our Heritage</p>
-             <h2 className="display-md" style={{ marginBottom: '3rem' }}>
-                Born in the <br/> Heart of Makrana
-             </h2>
-             <p style={{
-               fontSize: '1.25rem',
-               lineHeight: '1.9',
-               color: 'var(--color-outline)',
-               maxWidth: '550px'
-             }}>
-               The Taj Mahal was built from Makrana marble—a stone that breathes history. Founded by the Saini family in 1993, Roop Stone Arts continues this legacy, hand-selecting every block for its resonant crystalline structure and unique narrative.
-             </p>
-          </div>
-          <div className="reveal-hidden" style={{ position: 'relative' }}>
-            <div style={{
-              height: '700px',
-              backgroundImage: `url('/images/kavya.png')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              clipPath: 'polygon(10% 0, 100% 0, 90% 100%, 0 100%)'
-            }} />
-          </div>
-        </div>
-      </section>
-
-      {/* Brands & Collections */}
-      <section id="brands" ref={brandsRef} style={{ padding: '10vw 8vw', minHeight: '100vh' }}>
-         <div style={{ textAlign: 'center', marginBottom: '10vw' }}>
-            <p className="label-md reveal-hidden">The Triad of Artistry</p>
-            <h2 className="display-md reveal-hidden" style={{ marginTop: '1.5rem' }}>Our Curated Brands</h2>
-         </div>
-
-         <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', 
-            gap: '6vw',
-            alignItems: 'start'
-         }}>
-           <div className="reveal-hidden">
-              <GalleryTile 
-                image="/images/sparsh.png" 
-                title="SPARSH" 
-                subtitle="High-End Home Mandirs"
-              />
-              <div style={{ marginTop: '3rem', padding: '0 2rem' }}>
-                <h3 className="display-sm" style={{ marginBottom: '1.5rem' }}>Divine Resonance</h3>
-                <p style={{ color: 'var(--color-outline)', lineHeight: '1.7', fontSize: '1.1rem' }}>
-                  The Axis of the Home. SPARSH creates spiritual sanctuaries like the **Mayur Darbar** and **Samyak Darshan Dham**, where Makrana marble is carvd into intricate divine narratives.
-                </p>
-              </div>
-           </div>
-
-           <div className="reveal-hidden" style={{ marginTop: '12vw' }}>
-              <GalleryTile 
-                image="/images/ira.png" 
-                title="IRA" 
-                subtitle="Luxury Stone Furniture"
-              />
-              <div style={{ marginTop: '3rem', padding: '0 2rem' }}>
-                <h3 className="display-sm" style={{ marginBottom: '1.5rem' }}>Modern Monoliths</h3>
-                <p style={{ color: 'var(--color-outline)', lineHeight: '1.7', fontSize: '1.1rem' }}>
-                  Where functionality meets the eternal. IRA transforms raw marble and granite into sculptural furniture—tables, consoles, and artifacts that anchor a space with monumental presence.
-                </p>
-              </div>
-           </div>
-
-           <div className="reveal-hidden">
-              <GalleryTile 
-                image="/images/kavya.png" 
-                title="KAVYA" 
-                subtitle="Exquisite Stone Artistry"
-              />
-              <div style={{ marginTop: '3rem', padding: '0 2rem' }}>
-                <h3 className="display-sm" style={{ marginBottom: '1.5rem' }}>Stone Stories</h3>
-                <p style={{ color: 'var(--color-outline)', lineHeight: '1.7', fontSize: '1.1rem' }}>
-                  Art that endures. KAVYA specializes in intricate Jali work, inlay art, and wall panelling. Every piece is a testament to the master carver’s patience and the stone’s soul.
-                </p>
-              </div>
-           </div>
-         </div>
-      </section>
-
-      {/* Inquiry Selection */}
-      <section 
-        id="inquiry"
-        ref={inquiryRef}
-        style={{ padding: '15vw 0', display: 'flex', justifyContent: 'center' }}
-      >
-        <div 
-          className="reveal-hidden"
-          style={{
-            maxWidth: '1400px',
-            width: '90%',
-            padding: '10vw 8vw',
-            backgroundColor: 'var(--color-surface-container-highest)',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '10vw',
-            alignItems: 'center',
-          }}
-        >
-          <div>
-             <h3 className="display-md" style={{ marginBottom: '3rem' }}>Begin Your <br/> Dialogue</h3>
-             <p style={{ fontSize: '1.3rem', color: 'var(--color-outline)', lineHeight: '1.8' }}>
-               From global shipping to custom 3D design consultations, we manage the entire journey of your architectural vision.
-             </p>
-             <div style={{ marginTop: '4rem', display: 'flex', gap: '3rem' }}>
-                <div>
-                   <p className="label-md" style={{ color: 'var(--color-text)', fontSize: '0.7rem' }}>Contact Us</p>
-                   <p style={{ marginTop: '0.5rem', fontWeight: '500' }}>+91 91161 31818</p>
-                </div>
-                <div>
-                   <p className="label-md" style={{ color: 'var(--color-text)', fontSize: '0.7rem' }}>Location</p>
-                   <p style={{ marginTop: '0.5rem', fontWeight: '500' }}>Makrana, Rajasthan, India</p>
-                </div>
-             </div>
-          </div>
-
-          <form style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
-            <div style={{ position: 'relative' }}>
-               <input 
-                 type="text" 
-                 placeholder="FULL NAME"
-                 className="luxury-input"
-                 style={{
-                   width: '100%',
-                   padding: '1.5rem 0',
-                   background: 'transparent',
-                   border: 'none',
-                   borderBottom: '1px solid var(--color-outline-variant)',
-                   fontSize: '0.85rem',
-                   letterSpacing: '0.2em',
-                   outline: 'none',
-                   color: 'var(--color-text)'
-                 }}
-               />
-            </div>
-            <div style={{ position: 'relative' }}>
-               <input 
-                 type="email" 
-                 placeholder="EMAIL ADDRESS"
-                 className="luxury-input"
-                 style={{
-                   width: '100%',
-                   padding: '1.5rem 0',
-                   background: 'transparent',
-                   border: 'none',
-                   borderBottom: '1px solid var(--color-outline-variant)',
-                   fontSize: '0.85rem',
-                   letterSpacing: '0.2em',
-                   outline: 'none',
-                   color: 'var(--color-text)'
-                 }}
-               />
-            </div>
-            <div style={{ position: 'relative' }}>
-               <select 
-                 className="luxury-input"
-                 style={{
-                   width: '100%',
-                   padding: '1.5rem 0',
-                   background: 'transparent',
-                   border: 'none',
-                   borderBottom: '1px solid var(--color-outline-variant)',
-                   fontSize: '0.85rem',
-                   letterSpacing: '0.2em',
-                   outline: 'none',
-                   color: 'var(--color-text)',
-                   appearance: 'none'
-                 }}
-               >
-                  <option value="">SELECT INTEREST</option>
-                  <option value="sparsh">SPARSH (HOME TEMPLES)</option>
-                  <option value="ira">IRA (STONE FURNITURE)</option>
-                  <option value="kavya">KAVYA (STONE ARTISTRY)</option>
-               </select>
-            </div>
-            <button type="submit" className="bronze-luster" style={{
-              marginTop: '2rem',
-              padding: '1.8rem',
-              color: '#fff',
-              fontSize: '0.85rem',
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              fontWeight: '700',
-            }}>
-              Request Consultation
-            </button>
-          </form>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer style={{ 
-        padding: '10vw 8vw', 
-        backgroundColor: 'var(--color-surface-container-low)',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-        gap: '6vw'
+      {/* Crafting Process Section */}
+      <section style={{ 
+        padding: '15rem 5vw', 
+        backgroundColor: 'var(--color-background)',
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: '8rem'
       }}>
-         <div>
-            <div style={{ fontSize: '1.5rem', letterSpacing: '0.3em', marginBottom: '2rem', fontWeight: '500' }}>ROOP STONE ARTS</div>
-            <p style={{ opacity: 0.6, fontSize: '0.9rem', lineHeight: '1.7', maxWidth: '300px' }}>
-              Purveyors of rare architectural stone and artistic geological artifacts. From the heart of Makrana to the world.
-            </p>
-         </div>
-         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4vw' }}>
+        {/* Left Side: Heavy Typography */}
+        <div style={{ flex: '1', maxWidth: '500px' }}>
+          <p style={{
+            fontSize: '0.9rem',
+            color: 'var(--color-primary)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.15em',
+            marginBottom: '1rem',
+            fontWeight: '600'
+          }}>Process</p>
+          <h2 style={{ fontSize: '4rem', marginBottom: '2rem', lineHeight: '1.1' }}>
+            Crafting Forever
+          </h2>
+          <p style={{ fontSize: '1.2rem', color: 'var(--color-outline)', lineHeight: '1.7', marginBottom: '4rem' }}>
+            Our process is slow, deliberate, and uncompromising. From the initial selection of the block at the quarry to the final polishing in our studio, every touch is an act of preservation.
+          </p>
+
+          <div style={{ display: 'flex', gap: '4rem' }}>
             <div>
-               <p className="label-md" style={{ marginBottom: '2rem' }}>Navigate</p>
-               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '0.9rem', opacity: 0.8 }}>
-                  <li><Link href="#legacy">Our Story</Link></li>
-                  <li><Link href="#brands">Collections</Link></li>
-                  <li><Link href="#inquiry">Consultation</Link></li>
-               </ul>
+              <p style={{ fontSize: '3rem', fontFamily: 'var(--font-heading)', color: 'var(--color-primary)' }}>45+</p>
+              <p style={{ fontSize: '1rem', color: 'var(--color-outline)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Master Artisans</p>
             </div>
             <div>
-               <p className="label-md" style={{ marginBottom: '2rem' }}>Social</p>
-               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '0.9rem', opacity: 0.8 }}>
-                  <li><Link href="#">Instagram</Link></li>
-                  <li><Link href="#">LinkedIn</Link></li>
-                  <li><Link href="#">Pinterest</Link></li>
-               </ul>
+              <p style={{ fontSize: '3rem', fontFamily: 'var(--font-heading)', color: 'var(--color-primary)' }}>1200</p>
+              <p style={{ fontSize: '1rem', color: 'var(--color-outline)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Global Installations</p>
             </div>
-         </div>
-         <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-            <p style={{ opacity: 0.4, fontSize: '0.7rem', letterSpacing: '0.2em' }}>
-              © {new Date().getFullYear()} ROOP STONE ARTS. ALL RIGHTS RESERVED.
-            </p>
-         </div>
-      </footer>
+          </div>
+        </div>
+
+        {/* Right Side: Floating "Inset" Card for Form/Contact */}
+        <div style={{
+          flex: '1',
+          backgroundColor: 'var(--color-surface-lowest)',
+          padding: '4rem',
+          borderRadius: '24px',
+          boxShadow: '0 40px 100px rgba(30, 28, 18, 0.05)'
+        }}>
+          <h3 style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>Begin Your Story</h3>
+          <p style={{ color: 'var(--color-outline)', marginBottom: '3rem', lineHeight: '1.6' }}>
+            Connect with our consultants to explore how the earth’s most timeless medium can transform your architectural vision.
+          </p>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            <input 
+              type="text" 
+              placeholder="Your Name" 
+              style={{
+                width: '100%',
+                padding: '1rem 0',
+                border: 'none',
+                borderBottom: '1px solid var(--color-outline-variant)',
+                backgroundColor: 'transparent',
+                outline: 'none',
+                fontSize: '1rem',
+                fontFamily: 'var(--font-body)',
+                color: 'var(--color-text)',
+                transition: 'border-color 0.3s ease'
+              }}
+              onFocus={(e) => e.target.style.borderBottom = '1px solid var(--color-primary)'}
+              onBlur={(e) => e.target.style.borderBottom = '1px solid var(--color-outline-variant)'}
+            />
+            <input 
+              type="email" 
+              placeholder="Your Email" 
+              style={{
+                width: '100%',
+                padding: '1rem 0',
+                border: 'none',
+                borderBottom: '1px solid var(--color-outline-variant)',
+                backgroundColor: 'transparent',
+                outline: 'none',
+                fontSize: '1rem',
+                fontFamily: 'var(--font-body)',
+                color: 'var(--color-text)',
+                transition: 'border-color 0.3s ease'
+              }}
+              onFocus={(e) => e.target.style.borderBottom = '1px solid var(--color-primary)'}
+              onBlur={(e) => e.target.style.borderBottom = '1px solid var(--color-outline-variant)'}
+            />
+            <button style={{
+              marginTop: '1rem',
+              padding: '1rem',
+              background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-container) 100%)',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              fontSize: '0.9rem',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              cursor: 'pointer',
+              boxShadow: '0 8px 30px rgba(119, 89, 44, 0.15)',
+              transition: 'transform 0.3s ease'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+              Submit Inquiry
+            </button>
+          </div>
+        </div>
+      </section>
+
     </main>
   );
 }
+
