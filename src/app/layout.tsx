@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Serif, Manrope } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
 
 const notoSerif = Noto_Serif({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-heading" });
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-body" });
@@ -21,10 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${notoSerif.variable} ${manrope.variable}`}>
       <body>
-        <Navbar />
         {children}
-        <FloatingWhatsApp />
-        <Footer />
       </body>
     </html>
   );
