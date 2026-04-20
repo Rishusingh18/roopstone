@@ -138,7 +138,7 @@ export default function Home() {
           <div className="reveal-hidden" style={{ position: 'relative' }}>
             <div style={{
               height: '700px',
-              backgroundImage: `url('/images/kavya.png')`,
+              backgroundImage: `url('/images/products/18.jpg')`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               clipPath: 'polygon(10% 0, 100% 0, 90% 100%, 0 100%)'
@@ -162,14 +162,14 @@ export default function Home() {
          }}>
            <div className="reveal-hidden">
               <GalleryTile 
-                image="/images/sparsh.png" 
+                image="/images/products/1.jpg" 
                 title="SPARSH" 
                 subtitle="High-End Home Mandirs"
               />
               <div style={{ marginTop: '3rem', padding: '0 2rem' }}>
                 <h3 className="display-sm" style={{ marginBottom: '1.5rem' }}>Divine Resonance</h3>
                 <p style={{ color: 'var(--color-outline)', lineHeight: '1.7', fontSize: '1.1rem' }}>
-                  The Axis of the Home. SPARSH creates spiritual sanctuaries like the **Mayur Darbar** and **Samyak Darshan Dham**, where Makrana marble is carvd into intricate divine narratives.
+                  The Axis of the Home. SPARSH creates spiritual sanctuaries like the **Mayur Darbar** and **Samyak Darshan Dham**, where Makrana marble is carved into intricate divine narratives.
                 </p>
               </div>
            </div>
@@ -190,7 +190,7 @@ export default function Home() {
 
            <div className="reveal-hidden">
               <GalleryTile 
-                image="/images/kavya.png" 
+                image="/images/products/14.jpg" 
                 title="KAVYA" 
                 subtitle="Exquisite Stone Artistry"
               />
@@ -323,7 +323,10 @@ export default function Home() {
         gap: '6vw'
       }}>
          <div>
-            <div style={{ fontSize: '1.5rem', letterSpacing: '0.3em', marginBottom: '2rem', fontWeight: '500' }}>ROOP STONE ARTS</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
+              <img src="/images/logo.png" alt="Logo" style={{ height: '40px', width: 'auto' }} />
+              <div style={{ fontSize: '1.2rem', letterSpacing: '0.3em', fontWeight: '500' }}>ROOP STONE ARTS</div>
+            </div>
             <p style={{ opacity: 0.6, fontSize: '0.9rem', lineHeight: '1.7', maxWidth: '300px' }}>
               Purveyors of rare architectural stone and artistic geological artifacts. From the heart of Makrana to the world.
             </p>

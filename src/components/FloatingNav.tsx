@@ -15,9 +15,11 @@ export default function FloatingNav() {
   }, []);
 
   const navLinks = [
-    { name: 'Legacy', href: '#legacy' },
-    { name: 'Brands', href: '#brands' },
-    { name: 'Inquire', href: '#inquiry' },
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/about' },
+    { name: 'Legacy', href: '/#legacy' },
+    { name: 'Brands', href: '/#brands' },
+    { name: 'Inquire', href: '/#inquiry' },
   ];
 
   return (
