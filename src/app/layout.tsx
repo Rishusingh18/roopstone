@@ -1,9 +1,21 @@
 import type { Metadata } from "next";
-import { Noto_Serif, Manrope } from "next/font/google";
+import { Cinzel, Jost } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
 
-const notoSerif = Noto_Serif({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-heading" });
-const manrope = Manrope({ subsets: ["latin"], variable: "--font-body" });
+const cinzel = Cinzel({ 
+  subsets: ["latin"], 
+  weight: ["400", "700"], 
+  variable: "--font-cinzel" 
+});
+
+const jost = Jost({ 
+  subsets: ["latin"], 
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-jost" 
+});
 
 export const metadata: Metadata = {
   title: "Roop Stone Arts - Where Stones Become Poetry",
@@ -16,9 +28,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${notoSerif.variable} ${manrope.variable}`}>
-      <body>
+    <html lang="en" className={`${cinzel.variable} ${jost.variable}`}>
+      <body style={{ fontFamily: 'var(--font-jost), sans-serif' }}>
+        <Navbar />
         {children}
+        <FloatingWhatsApp />
+        <Footer />
       </body>
     </html>
   );
