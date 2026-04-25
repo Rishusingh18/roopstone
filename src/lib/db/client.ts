@@ -2,11 +2,11 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseServiceRole = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseServiceRole = process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder';
 
-if (!supabaseUrl || !supabaseServiceRole) {
-  throw new Error('Missing Supabase environment variables');
+if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  console.warn('⚠️ Missing Supabase environment variables. Database features may not work.');
 }
 
 /**
