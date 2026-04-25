@@ -32,6 +32,28 @@ export class EstimatorService {
   private static CACHE_KEY = 'estimator:config';
   private static CACHE_TTL = 300; // 5 minutes
 
+  private static FALLBACK_CONFIG: EstimatorRules = {
+    baseRatePerSqft: 14500,
+    materialMultipliers: {
+      premium_makrana: 1.5,
+      standard_vietnam: 1.0,
+      italian_carrara: 1.2,
+    },
+    complexityMultipliers: {
+      minimal: 1.0,
+      moderate: 1.25,
+      intricate_heritage: 1.65,
+    },
+    templeTypeMultipliers: {
+      wall_mounted: 0.8,
+      floor_standing: 1.0,
+      pooja_room_complete: 2.0,
+    },
+    surchargeBacklit: 25000,
+    surchargeIntlShipping: 150000,
+    quoteBandPercent: 10,
+  };
+
   /**
    * Loads pricing coefficients from DB with Redis caching
    */
@@ -93,8 +115,8 @@ export class EstimatorService {
       return finalRules;
     } catch (err) {
       console.error('Estimator Configuration Load Failed:', err);
-      // Fallback or rethrow? For production, we want to know if it fails.
-      throw err;
+      console.warn('Using fallback configuration for Estimator');
+      return EstimatorService.FALLBACK_CONFIG;
     }
   }
 
