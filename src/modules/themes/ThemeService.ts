@@ -28,7 +28,7 @@ export class ThemeService {
       // 1. Check Redis Cache
       const cached = await redis.get(ThemeService.CACHE_KEY);
       if (cached) {
-        return typeof cached === 'string' ? JSON.parse(cached) : cached;
+        return (typeof cached === 'string' ? JSON.parse(cached) : cached) as ThemeConfig;
       }
 
       // 2. Query DB

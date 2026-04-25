@@ -40,7 +40,7 @@ export class EstimatorService {
       // 1. Try Cache
       const cached = await redis.get(EstimatorService.CACHE_KEY);
       if (cached) {
-        return typeof cached === 'string' ? JSON.parse(cached) : cached;
+        return (typeof cached === 'string' ? JSON.parse(cached) : cached) as EstimatorRules;
       }
 
       // 2. Fetch from DB

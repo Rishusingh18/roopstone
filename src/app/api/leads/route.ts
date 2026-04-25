@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
     if (error instanceof z.ZodError) {
       return errorResponse(
-        error.errors[0].message, 
+        error.issues[0]?.message || 'Invalid lead details',
         400, 
         'VALIDATION_ERROR'
       );

@@ -42,7 +42,7 @@ export class AuditService {
    */
   static getRequestMeta(req: NextRequest) {
     return {
-      ipAddress: req.ip || req.headers.get('x-forwarded-for') || undefined,
+      ipAddress: req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || undefined,
       userAgent: req.headers.get('user-agent') || undefined,
     };
   }

@@ -1,111 +1,110 @@
 "use client";
-import React, { useState, useRef, useCallback } from "react";
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
-import { cn } from "@/lib/utils";
+
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import Link from 'next/link';
+import Link from "next/link";
+import { useRef, useState } from "react";
+import { navItems } from "@/lib/public-data";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  
-  const navItems = [
-    { name: "About Us", link: "/about-us" },
-    { name: "Sparsh", link: "/sparsh" },
-    { name: "IRA", link: "/ira" },
-    { name: "Our Creations", link: "/creations" },
-    { name: "Journal", link: "/journal" },
-    { name: "Testimonials", link: "/testimonials" },
-  ];
 
   return (
-    <NavbarContainer>
+    <div
+      style={{
+        position: "fixed",
+        left: 0,
+        right: 0,
+        top: 0,
+        width: "100%",
+        zIndex: 9999,
+        display: "flex",
+        justifyContent: "center",
+        pointerEvents: "none",
+      }}
+    >
       <NavBody>
-        <NavbarLogo>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '1rem', textDecoration: 'none' }}>
-            <img 
-              src="/logo.png" 
-              alt="Roop Stone Arts" 
-              style={{ height: '60px', width: 'auto' }} 
-            />
-            <div style={{ 
-              fontFamily: 'var(--font-heading)', 
-              fontSize: '1.2rem', 
-              fontWeight: '400', 
-              color: 'var(--color-text-main)', 
-              letterSpacing: '3px', 
-              textTransform: 'uppercase',
-              lineHeight: '1.2'
-            }}>
-              Roop <span style={{ display: 'block', fontSize: '0.7rem', letterSpacing: '5px', opacity: 0.7 }}>Stone Arts</span>
-            </div>
-          </Link>
-        </NavbarLogo>
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: "1rem", textDecoration: "none", flexShrink: 0 }}>
+          <img src="/logo.png" alt="Roop Stone Arts" style={{ height: 60, width: "auto" }} />
+          <div
+            style={{
+              fontFamily: "var(--font-heading)",
+              fontSize: "1.2rem",
+              fontWeight: 400,
+              color: "var(--color-text-main)",
+              letterSpacing: 3,
+              textTransform: "uppercase",
+              lineHeight: 1.2,
+            }}
+          >
+            Roop <span style={{ display: "block", fontSize: "0.7rem", letterSpacing: 5, opacity: 0.7 }}>Stone Arts</span>
+          </div>
+        </Link>
 
-        <NavItems items={navItems} />
+        <NavItems />
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-          <NavbarButton onClick={() => window.location.href='/book-consultation'}>
+        <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+          <Link href="/book-consultation" className="md-block" style={buttonStyle}>
             Book Consultation
-          </NavbarButton>
-          
-          <MobileNavToggle isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
+          </Link>
+          <button
+            onClick={() => setIsOpen((value) => !value)}
+            className="lg-hidden"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            style={{ background: "none", border: "none", cursor: "pointer", color: "var(--color-text-main)", alignItems: "center" }}
+          >
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
         </div>
       </NavBody>
 
-      <MobileNavMenu isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        {navItems.map((item, idx) => (
-          <Link 
-            key={idx} 
-            href={item.link} 
-            onClick={() => setIsOpen(false)}
-            style={{ 
-              fontSize: '1.5rem', 
-              fontFamily: 'var(--font-heading)', 
-              textTransform: 'uppercase', 
-              letterSpacing: '0.1em',
-              color: 'var(--color-text-main)'
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 9998,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "2.4rem",
+              backgroundColor: "rgba(251, 247, 238, 0.98)",
+              pointerEvents: "auto",
             }}
           >
-            {item.name}
-          </Link>
-        ))}
-        <Link 
-          href="/book-consultation"
-          onClick={() => setIsOpen(false)}
-          style={{ 
-            fontSize: '1.5rem', 
-            fontFamily: 'var(--font-heading)', 
-            textTransform: 'uppercase', 
-            letterSpacing: '0.1em',
-            color: 'var(--color-primary)',
-            fontWeight: '600',
-            marginTop: '1rem'
-          }}
-        >
-          Book Consultation
-        </Link>
-      </MobileNavMenu>
-    </NavbarContainer>
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setIsOpen(false)}
+                style={{
+                  fontFamily: "var(--font-heading)",
+                  color: "var(--color-text-main)",
+                  fontSize: "1.55rem",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                }}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <Link href="/book-consultation" onClick={() => setIsOpen(false)} className="btn-primary">
+              Book Consultation
+              <span className="arrow">→</span>
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 
-const NavbarContainer = ({ children }) => (
-  <div style={{
-    position: 'fixed',
-    left: 0,
-    right: 0,
-    top: 0,
-    width: '100%',
-    zIndex: 9999,
-    display: 'flex',
-    justifyContent: 'center',
-    pointerEvents: 'none',
-  }}>
-    {children}
-  </div>
-);
-
-const NavBody = ({ children }) => {
+function NavBody({ children }: { children: React.ReactNode }) {
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
   const lastScrolled = useRef(false);
@@ -113,7 +112,7 @@ const NavBody = ({ children }) => {
   useMotionValueEvent(scrollY, "change", (latest) => {
     const shouldBeScrolled = latest > 80;
     const shouldBeUnscrolled = latest < 30;
-    
+
     if (shouldBeScrolled && !lastScrolled.current) {
       lastScrolled.current = true;
       setIsScrolled(true);
@@ -123,42 +122,33 @@ const NavBody = ({ children }) => {
     }
   });
 
-  return (
-    <div
-      className={isScrolled ? 'navbar-island navbar-island--scrolled' : 'navbar-island'}
-    >
-      {children}
-    </div>
-  );
-};
+  return <div className={isScrolled ? "navbar-island navbar-island--scrolled" : "navbar-island"}>{children}</div>;
+}
 
-const NavItems = ({ items }) => {
-  const [hoveredIdx, setHoveredIdx] = useState(null);
+function NavItems() {
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   return (
-    <div className="md-flex" style={{ gap: '1.8rem' }}>
-      {items.map((item, idx) => (
+    <div className="md-flex" style={{ gap: "1.8rem" }}>
+      {navItems.map((item, idx) => (
         <Link
-          key={idx}
-          href={item.link}
+          key={item.href}
+          href={item.href}
           onMouseEnter={() => setHoveredIdx(idx)}
           onMouseLeave={() => setHoveredIdx(null)}
           className="nav-link"
-          style={{ 
-            color: hoveredIdx === idx ? 'var(--color-primary)' : 'var(--color-text-main)',
-            fontSize: '0.85rem'
-          }}
+          style={{ color: hoveredIdx === idx ? "var(--color-primary)" : "var(--color-text-main)", fontSize: "0.85rem" }}
         >
           {item.name}
           {hoveredIdx === idx && (
             <motion.span
               layoutId="hover-pill"
               style={{
-                position: 'absolute',
-                inset: '-8px -16px',
+                position: "absolute",
+                inset: "-8px -16px",
                 zIndex: -1,
-                backgroundColor: 'rgba(119, 89, 44, 0.05)',
-                borderRadius: '100px',
+                borderRadius: 100,
+                backgroundColor: "rgba(119, 89, 44, 0.05)",
               }}
               transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
             />
@@ -167,74 +157,17 @@ const NavItems = ({ items }) => {
       ))}
     </div>
   );
+}
+
+const buttonStyle: React.CSSProperties = {
+  padding: "0.8rem 1.8rem",
+  borderRadius: 100,
+  backgroundColor: "var(--color-primary)",
+  color: "#fff",
+  fontSize: "0.8rem",
+  fontWeight: 600,
+  letterSpacing: 1,
+  textTransform: "uppercase",
+  boxShadow: "0 8px 20px rgba(119, 89, 44, 0.2)",
+  transition: "all 0.3s ease",
 };
-
-const NavbarLogo = ({ children }) => (
-  <div style={{ flexShrink: 0 }}>
-    {children}
-  </div>
-);
-
-const NavbarButton = ({ children, onClick }) => (
-  <button
-    onClick={onClick}
-    className="md-block"
-    style={{
-      padding: '0.8rem 1.8rem',
-      backgroundColor: 'var(--color-primary)',
-      color: '#fff',
-      border: 'none',
-      borderRadius: '100px',
-      fontSize: '0.8rem',
-      fontWeight: '600',
-      textTransform: 'uppercase',
-      letterSpacing: '1px',
-      cursor: 'pointer',
-      boxShadow: '0 8px 20px rgba(119, 89, 44, 0.2)',
-      transition: 'all 0.3s ease'
-    }}
-  >
-    {children}
-  </button>
-);
-
-const MobileNavToggle = ({ isOpen, onClick }) => (
-  <button 
-    onClick={onClick} 
-    className="lg-hidden"
-    style={{ 
-      background: 'none', 
-      border: 'none', 
-      cursor: 'pointer', 
-      color: 'var(--color-text-main)',
-      alignItems: 'center'
-    }}
-  >
-    {isOpen ? <X size={28} /> : <Menu size={28} />}
-  </button>
-);
-
-const MobileNavMenu = ({ isOpen, children }) => (
-  <AnimatePresence>
-    {isOpen && (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.95 }}
-        style={{
-          position: 'fixed',
-          inset: 0,
-          backgroundColor: 'rgba(255, 255, 255, 0.98)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '3rem',
-          zIndex: 9998
-        }}
-      >
-        {children}
-      </motion.div>
-    )}
-  </AnimatePresence>
-);
