@@ -1,360 +1,198 @@
-'use client';
-
-import { useEffect, useState, useRef } from 'react';
-import FloatingNav from '@/components/FloatingNav';
-import GalleryTile from '@/components/GalleryTile';
-import Link from 'next/link';
+import Link from "next/link";
+import CreationCard from "@/components/public/CreationCard";
+import InquiryForm from "@/components/public/InquiryForm";
+import Ornament from "@/components/public/Ornament";
+import Reveal from "@/components/public/Reveal";
+import { archiveSeries, creations } from "@/lib/public-data";
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
-  const [scrollPos, setScrollPos] = useState(0);
-  const [bgShade, setBgShade] = useState('var(--color-background)');
-  
-  const heroRef = useRef<HTMLElement>(null);
-  const craftRef = useRef<HTMLElement>(null);
-  const brandsRef = useRef<HTMLElement>(null);
-  const inquiryRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    setMounted(true);
-    
-    const handleScroll = () => {
-      setScrollPos(window.scrollY);
-      if (window.scrollY > 1500) {
-        setBgShade('var(--color-surface-container-high)');
-      } else if (window.scrollY > 600) {
-        setBgShade('var(--color-surface-container-low)');
-      } else {
-        setBgShade('var(--color-background)');
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   return (
-    <main style={{ 
-      backgroundColor: bgShade, 
-      color: 'var(--color-text)', 
-      transition: 'background-color 1.2s cubic-bezier(0.2, 0.8, 0.2, 1)',
-      position: 'relative'
-    }}>
-      <FloatingNav />
-
-      {/* Hero Section */}
-      <section 
-        ref={heroRef}
-        style={{
-          height: '100vh',
-          minHeight: '800px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          padding: '12rem 8vw 0',
-          position: 'relative',
-          overflow: 'hidden'
-        }}
-      >
-        <div 
-          className="reveal-hidden hero-element"
+    <main data-testid="home-main" style={{ minHeight: "100vh", backgroundColor: "var(--color-background)", color: "var(--color-text)", overflow: "hidden" }}>
+      <section className="section-pad-hero" style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+        <div
+          aria-hidden="true"
           style={{
-            position: 'absolute',
-            top: '0',
-            right: '0',
-            width: '65vw',
-            height: '100vh',
-            backgroundImage: `url('/images/hero.png')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            position: "absolute",
+            top: "12vh",
+            right: "-4vw",
+            width: "58vw",
+            height: "78vh",
             zIndex: 0,
-            opacity: 0.95,
-            transform: `translateY(${scrollPos * 0.2}px)`,
+            overflow: "hidden",
+            borderTopLeftRadius: 140,
+            borderBottomRightRadius: 140,
+            backgroundImage: "url('/images/products/3.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            boxShadow: "0 40px 120px rgba(30,28,18,0.12)",
           }}
         >
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: 'linear-gradient(to right, var(--color-background) 0%, transparent 50%), linear-gradient(to top, var(--color-background) 0%, transparent 20%)'
-          }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to left, transparent 0%, var(--color-background) 92%)", borderTopLeftRadius: 140, borderBottomRightRadius: 140 }} />
         </div>
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 860, marginTop: "8vh" }}>
+          <Reveal>
+            <Ornament align="left" style={{ marginBottom: "1.5rem" }}>
+              Est. 1988 · Makrana
+            </Ornament>
+            <h1 style={{ marginBottom: "1.8rem" }}>
+              Where Stones
+              <br />
+              <span style={{ fontStyle: "italic", color: "var(--color-royal)" }}>Become Poetry</span>
+            </h1>
+            <p style={{ maxWidth: 520, marginBottom: "2.6rem", color: "var(--color-text-secondary)", fontSize: "1.2rem", lineHeight: 1.7 }}>
+              For over three decades, Roop Stone Arts has coaxed verse from the quarries of Makrana, sculpting marble that carries the gravitas of Indian royalty and the quiet of modern sanctuaries.
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+              <Link className="btn-primary" data-testid="hero-cta-creations" href="/creations">
+                View Creations <span className="arrow">→</span>
+              </Link>
+              <Link className="btn-ghost" data-testid="hero-cta-consult" href="/book-consultation">
+                Book a Consultation
+              </Link>
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "2.8rem", marginTop: "2.6rem" }}>
+              {[
+                ["45+", "Master Artisans"],
+                ["1200+", "Installations"],
+                ["30+", "Countries"],
+              ].map(([stat, label]) => (
+                <div key={label}>
+                  <p style={{ color: "var(--color-primary)", fontFamily: "var(--font-heading)", fontSize: "2rem", lineHeight: 1 }}>{stat}</p>
+                  <p className="brand-subtitle" style={{ marginTop: "0.4rem" }}>{label}</p>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+        <Reveal delay={400}>
+          <div style={{ position: "absolute", right: "5vw", bottom: "3rem", zIndex: 1, display: "flex", alignItems: "flex-end", justifyContent: "flex-end", pointerEvents: "none" }}>
+            <p className="brand-subtitle mobile-hide" style={{ writingMode: "vertical-rl", textOrientation: "mixed", opacity: 0.6 }}>
+              Scroll to wander ↓
+            </p>
+          </div>
+        </Reveal>
+      </section>
 
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: '900px' }}>
-          <p className="label-md reveal-hidden hero-element" style={{ transitionDelay: '0.2s' }}>EST. 1993 | MAKRANA, RAJASTHAN</p>
-          <h1 className="display-lg reveal-hidden hero-element" style={{ margin: '1.5rem 0 3.5rem', transitionDelay: '0.4s' }}>
-            Where <span style={{ fontFamily: 'var(--font-heading)', fontStyle: 'italic', fontWeight: '300' }}>Stone</span> <br/> Becomes Poetry
-          </h1>
-          <p className="reveal-hidden hero-element" style={{
-            fontSize: '1.4rem',
-            lineHeight: '1.8',
-            color: 'var(--color-outline)',
-            marginBottom: '4.5rem',
-            maxWidth: '600px',
-            transitionDelay: '0.6s'
-          }}>
-            For three decades, Roop Stone Arts has curated the earth’s most timeless medium. From the sacred white marble of Makrana to the brutalist strength of granite.
+      <section style={{ padding: "2rem 0", overflow: "hidden", borderTop: "1px solid rgba(119,89,44,0.12)", borderBottom: "1px solid rgba(119,89,44,0.12)", background: "var(--color-background-alt)" }}>
+        <div className="marquee" style={{ color: "var(--color-primary)", fontFamily: "var(--font-heading)", fontSize: "1.4rem", letterSpacing: "0.1em" }}>
+          {Array.from({ length: 2 }).flatMap((_, group) =>
+            ["Makrana White", "✦", "Statuario", "✦", "Royal Jaali", "✦", "Sacred Geometry", "✦", "Hand-Carved", "✦", "Heirloom-Grade", "✦"].map((item, index) => (
+              <span key={`${group}-${index}`}>{item}</span>
+            )),
+          )}
+        </div>
+      </section>
+
+      <section className="section-pad">
+        <Reveal>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "2rem", marginBottom: "5rem" }}>
+            <div>
+              <Ornament align="left" style={{ marginBottom: "1rem" }}>
+                The Archive
+              </Ornament>
+              <h2 style={{ maxWidth: 520 }}>Curated Series from our Master Archives</h2>
+            </div>
+            <p style={{ maxWidth: 340, color: "var(--color-text-secondary)", fontSize: "1.05rem", lineHeight: 1.7, textAlign: "right" }}>
+              Every slab carries a geology. Every vein, a memory. Discover the textures that have shaped eras of Indian architecture.
+            </p>
+          </div>
+        </Reveal>
+        <div className="hide-scrollbar" style={{ display: "flex", gap: "2.5rem", overflowX: "auto", paddingBottom: "2rem", scrollSnapType: "x mandatory" }}>
+          {archiveSeries.map((item, index) => (
+            <Reveal key={item.title} delay={index * 100}>
+              <Link href="/creations" style={{ display: "block", minWidth: 340, scrollSnapAlign: "start" }}>
+                <div className="tile-radius hover-lift" style={{ position: "relative", height: 460, overflow: "hidden", backgroundImage: `url('${item.image}')`, backgroundSize: "cover", backgroundPosition: "center", boxShadow: "0 20px 60px rgba(30,28,18,0.08)" }}>
+                  <div style={{ position: "absolute", top: "1.5rem", left: "1.5rem", display: "flex", width: 42, height: 42, alignItems: "center", justifyContent: "center", borderRadius: "50%", background: "rgba(251,247,238,0.85)", color: "var(--color-royal)", fontFamily: "var(--font-heading)", fontSize: "0.9rem", backdropFilter: "blur(10px)" }}>{item.roman}</div>
+                  <div className="glass-panel" style={{ position: "absolute", right: "1.5rem", bottom: "1.5rem", left: "1.5rem", padding: "1.2rem 1.4rem", borderRadius: 14 }}>
+                    <p className="brand-subtitle" style={{ color: "var(--color-royal)", marginBottom: "0.3rem" }}>{item.realm}</p>
+                    <h3 style={{ fontSize: "1.35rem" }}>{item.title}</h3>
+                  </div>
+                </div>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-pad" style={{ background: "var(--color-background-alt)" }}>
+        <div className="responsive-grid-2">
+          <Reveal>
+            <div className="tile-radius" style={{ height: "78vh", backgroundImage: "url('/images/products/12.jpg')", backgroundSize: "cover", backgroundPosition: "center", boxShadow: "0 50px 120px rgba(30,28,18,0.12)" }} />
+          </Reveal>
+          <Reveal delay={200}>
+            <p className="brand-subtitle" style={{ color: "var(--color-royal)", marginBottom: "1rem" }}>The Collection</p>
+            <h2 style={{ marginBottom: "2rem", fontStyle: "italic" }}>
+              IRA.
+              <br />
+              Sculpted
+              <br />
+              Stillness.
+            </h2>
+            <p style={{ maxWidth: 440, marginBottom: "2.5rem", color: "var(--color-text-secondary)", fontSize: "1.1rem", lineHeight: 1.8 }}>
+              Our IRA series redefines marble as a medium of modern art. Each piece is a singular dialogue between tectonic force and artisan touch, an heirloom posed as a quiet statement.
+            </p>
+            <Link className="btn-ghost" data-testid="home-ira-cta" href="/ira">Explore IRA Artworks →</Link>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section-pad" style={{ position: "relative", textAlign: "center" }}>
+        <Reveal>
+          <p className="brand-subtitle" style={{ color: "var(--color-royal)", marginBottom: "1.2rem" }}>Sacred Heritage</p>
+          <h2 style={{ maxWidth: 860, margin: "0 auto 1.8rem" }}>
+            SPARSH. Crafting the <em style={{ color: "var(--color-primary)" }}>Sanctuary</em> within.
+          </h2>
+          <p style={{ maxWidth: 620, margin: "0 auto 4rem", color: "var(--color-text-secondary)", fontSize: "1.1rem", lineHeight: 1.8 }}>
+            Custom-crafted marble mandirs and devotional spaces where geometric precision meets spiritual resonance, a legacy of piety, carved for eternity.
           </p>
-          
-          <div className="reveal-hidden" style={{ transitionDelay: '0.8s' }}>
-            <Link href="#brands" className="bronze-luster" style={{
-              display: 'inline-block',
-              padding: '1.5rem 4rem',
-              color: '#fff',
-              fontSize: '0.85rem',
-              letterSpacing: '0.25em',
-              textTransform: 'uppercase',
-              fontWeight: '600',
-              boxShadow: '0 12px 40px rgba(119, 89, 44, 0.3)'
-            }}>
-              Explore Our Brands
-            </Link>
+        </Reveal>
+        <Reveal delay={200}>
+          <div style={{ position: "relative", width: "100%", height: "84vh", overflow: "hidden", borderTopLeftRadius: 100, borderBottomRightRadius: 100, backgroundImage: "url('/images/products/4.jpg')", backgroundSize: "cover", backgroundPosition: "center", boxShadow: "0 60px 160px rgba(30,28,18,0.15)" }}>
+            <div className="glass-panel" style={{ position: "absolute", bottom: "3rem", left: "50%", width: "min(520px, calc(100% - 2rem))", transform: "translateX(-50%)", padding: "2.4rem 3rem", borderRadius: 16, textAlign: "center" }}>
+              <p className="brand-subtitle" style={{ color: "var(--color-royal)", marginBottom: "0.6rem" }}>Featured Project</p>
+              <h3 style={{ marginBottom: "0.8rem", fontSize: "1.6rem" }}>The Temple at Ajmer</h3>
+              <p style={{ marginBottom: "1.6rem", color: "var(--color-text-secondary)", fontSize: "0.92rem", lineHeight: 1.6 }}>A masterpiece in Makrana Pure White marble, hand-carved jaalis and floral motifs.</p>
+              <Link className="btn-ghost" style={{ fontSize: "0.72rem" }} href="/sparsh">View Sparsh Collection →</Link>
+            </div>
           </div>
+        </Reveal>
+      </section>
+
+      <section className="section-pad" style={{ background: "var(--color-background-alt)" }}>
+        <Reveal>
+          <div style={{ marginBottom: "4rem", textAlign: "center" }}>
+            <Ornament style={{ marginBottom: "1rem" }}>Featured Creations</Ornament>
+            <h2>Handpicked from the Atelier</h2>
+          </div>
+        </Reveal>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "2rem" }}>
+          {creations.slice(0, 8).map((creation, index) => (
+            <Reveal key={creation.id} delay={index * 80}>
+              <CreationCard creation={creation} index={index} />
+            </Reveal>
+          ))}
         </div>
       </section>
 
-      {/* Legacy Section */}
-      <section 
-        id="legacy"
-        ref={craftRef}
-        style={{ padding: '15vw 8vw', minHeight: '100vh' }}
-      >
-        <div className="weighted-asymmetry">
-          <div className="reveal-hidden">
-             <p className="label-md" style={{ marginBottom: '1.5rem' }}>Our Heritage</p>
-             <h2 className="display-md" style={{ marginBottom: '3rem' }}>
-                Born in the <br/> Heart of Makrana
-             </h2>
-             <p style={{
-               fontSize: '1.25rem',
-               lineHeight: '1.9',
-               color: 'var(--color-outline)',
-               maxWidth: '550px'
-             }}>
-               The Taj Mahal was built from Makrana marble—a stone that breathes history. Founded by the Saini family in 1993, Roop Stone Arts continues this legacy, hand-selecting every block for its resonant crystalline structure and unique narrative.
-             </p>
-          </div>
-          <div className="reveal-hidden" style={{ position: 'relative' }}>
-            <div style={{
-              height: '700px',
-              backgroundImage: `url('/images/products/18.jpg')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              clipPath: 'polygon(10% 0, 100% 0, 90% 100%, 0 100%)'
-            }} />
-          </div>
-        </div>
-      </section>
-
-      {/* Brands & Collections */}
-      <section id="brands" ref={brandsRef} style={{ padding: '10vw 8vw', minHeight: '100vh' }}>
-         <div style={{ textAlign: 'center', marginBottom: '10vw' }}>
-            <p className="label-md reveal-hidden">The Triad of Artistry</p>
-            <h2 className="display-md reveal-hidden" style={{ marginTop: '1.5rem' }}>Our Curated Brands</h2>
-         </div>
-
-         <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', 
-            gap: '6vw',
-            alignItems: 'start'
-         }}>
-           <div className="reveal-hidden">
-              <GalleryTile 
-                image="/images/products/1.jpg" 
-                title="SPARSH" 
-                subtitle="High-End Home Mandirs"
-              />
-              <div style={{ marginTop: '3rem', padding: '0 2rem' }}>
-                <h3 className="display-sm" style={{ marginBottom: '1.5rem' }}>Divine Resonance</h3>
-                <p style={{ color: 'var(--color-outline)', lineHeight: '1.7', fontSize: '1.1rem' }}>
-                  The Axis of the Home. SPARSH creates spiritual sanctuaries like the **Mayur Darbar** and **Samyak Darshan Dham**, where Makrana marble is carved into intricate divine narratives.
-                </p>
-              </div>
-           </div>
-
-           <div className="reveal-hidden" style={{ marginTop: '12vw' }}>
-              <GalleryTile 
-                image="/images/ira.png" 
-                title="IRA" 
-                subtitle="Luxury Stone Furniture"
-              />
-              <div style={{ marginTop: '3rem', padding: '0 2rem' }}>
-                <h3 className="display-sm" style={{ marginBottom: '1.5rem' }}>Modern Monoliths</h3>
-                <p style={{ color: 'var(--color-outline)', lineHeight: '1.7', fontSize: '1.1rem' }}>
-                  Where functionality meets the eternal. IRA transforms raw marble and granite into sculptural furniture—tables, consoles, and artifacts that anchor a space with monumental presence.
-                </p>
-              </div>
-           </div>
-
-           <div className="reveal-hidden">
-              <GalleryTile 
-                image="/images/products/14.jpg" 
-                title="KAVYA" 
-                subtitle="Exquisite Stone Artistry"
-              />
-              <div style={{ marginTop: '3rem', padding: '0 2rem' }}>
-                <h3 className="display-sm" style={{ marginBottom: '1.5rem' }}>Stone Stories</h3>
-                <p style={{ color: 'var(--color-outline)', lineHeight: '1.7', fontSize: '1.1rem' }}>
-                  Art that endures. KAVYA specializes in intricate Jali work, inlay art, and wall panelling. Every piece is a testament to the master carver’s patience and the stone’s soul.
-                </p>
-              </div>
-           </div>
-         </div>
-      </section>
-
-      {/* Inquiry Selection */}
-      <section 
-        id="inquiry"
-        ref={inquiryRef}
-        style={{ padding: '15vw 0', display: 'flex', justifyContent: 'center' }}
-      >
-        <div 
-          className="reveal-hidden"
-          style={{
-            maxWidth: '1400px',
-            width: '90%',
-            padding: '10vw 8vw',
-            backgroundColor: 'var(--color-surface-container-highest)',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '10vw',
-            alignItems: 'center',
-          }}
-        >
-          <div>
-             <h3 className="display-md" style={{ marginBottom: '3rem' }}>Begin Your <br/> Dialogue</h3>
-             <p style={{ fontSize: '1.3rem', color: 'var(--color-outline)', lineHeight: '1.8' }}>
-               From global shipping to custom 3D design consultations, we manage the entire journey of your architectural vision.
-             </p>
-             <div style={{ marginTop: '4rem', display: 'flex', gap: '3rem' }}>
-                <div>
-                   <p className="label-md" style={{ color: 'var(--color-text)', fontSize: '0.7rem' }}>Contact Us</p>
-                   <p style={{ marginTop: '0.5rem', fontWeight: '500' }}>+91 91161 31818</p>
-                </div>
-                <div>
-                   <p className="label-md" style={{ color: 'var(--color-text)', fontSize: '0.7rem' }}>Location</p>
-                   <p style={{ marginTop: '0.5rem', fontWeight: '500' }}>Makrana, Rajasthan, India</p>
-                </div>
-             </div>
-          </div>
-
-          <form style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
-            <div style={{ position: 'relative' }}>
-               <input 
-                 type="text" 
-                 placeholder="FULL NAME"
-                 className="luxury-input"
-                 style={{
-                   width: '100%',
-                   padding: '1.5rem 0',
-                   background: 'transparent',
-                   border: 'none',
-                   borderBottom: '1px solid var(--color-outline-variant)',
-                   fontSize: '0.85rem',
-                   letterSpacing: '0.2em',
-                   outline: 'none',
-                   color: 'var(--color-text)'
-                 }}
-               />
-            </div>
-            <div style={{ position: 'relative' }}>
-               <input 
-                 type="email" 
-                 placeholder="EMAIL ADDRESS"
-                 className="luxury-input"
-                 style={{
-                   width: '100%',
-                   padding: '1.5rem 0',
-                   background: 'transparent',
-                   border: 'none',
-                   borderBottom: '1px solid var(--color-outline-variant)',
-                   fontSize: '0.85rem',
-                   letterSpacing: '0.2em',
-                   outline: 'none',
-                   color: 'var(--color-text)'
-                 }}
-               />
-            </div>
-            <div style={{ position: 'relative' }}>
-               <select 
-                 className="luxury-input"
-                 style={{
-                   width: '100%',
-                   padding: '1.5rem 0',
-                   background: 'transparent',
-                   border: 'none',
-                   borderBottom: '1px solid var(--color-outline-variant)',
-                   fontSize: '0.85rem',
-                   letterSpacing: '0.2em',
-                   outline: 'none',
-                   color: 'var(--color-text)',
-                   appearance: 'none'
-                 }}
-               >
-                  <option value="">SELECT INTEREST</option>
-                  <option value="sparsh">SPARSH (HOME TEMPLES)</option>
-                  <option value="ira">IRA (STONE FURNITURE)</option>
-                  <option value="kavya">KAVYA (STONE ARTISTRY)</option>
-               </select>
-            </div>
-            <button type="submit" className="bronze-luster" style={{
-              marginTop: '2rem',
-              padding: '1.8rem',
-              color: '#fff',
-              fontSize: '0.85rem',
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              fontWeight: '700',
-            }}>
-              Request Consultation
-            </button>
-          </form>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer style={{ 
-        padding: '10vw 8vw', 
-        backgroundColor: 'var(--color-surface-container-low)',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-        gap: '6vw'
-      }}>
-         <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
-              <img src="/images/logo.png" alt="Logo" style={{ height: '40px', width: 'auto' }} />
-              <div style={{ fontSize: '1.2rem', letterSpacing: '0.3em', fontWeight: '500' }}>ROOP STONE ARTS</div>
-            </div>
-            <p style={{ opacity: 0.6, fontSize: '0.9rem', lineHeight: '1.7', maxWidth: '300px' }}>
-              Purveyors of rare architectural stone and artistic geological artifacts. From the heart of Makrana to the world.
+      <section className="section-pad">
+        <div className="responsive-grid-2">
+          <Reveal>
+            <p className="brand-subtitle" style={{ color: "var(--color-primary)", marginBottom: "1rem" }}>Process</p>
+            <h2 style={{ marginBottom: "2rem" }}>
+              Crafting
+              <br />
+              <em style={{ color: "var(--color-royal)" }}>Forever.</em>
+            </h2>
+            <p style={{ marginBottom: "3rem", color: "var(--color-text-secondary)", fontSize: "1.1rem", lineHeight: 1.8 }}>
+              Our process is slow, deliberate, uncompromising. From quarry block to final polish, every touch is an act of preservation, a conversation between a Rajasthani artisan and the stone they have known since boyhood.
             </p>
-         </div>
-         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4vw' }}>
-            <div>
-               <p className="label-md" style={{ marginBottom: '2rem' }}>Navigate</p>
-               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '0.9rem', opacity: 0.8 }}>
-                  <li><Link href="#legacy">Our Story</Link></li>
-                  <li><Link href="#brands">Collections</Link></li>
-                  <li><Link href="#inquiry">Consultation</Link></li>
-               </ul>
-            </div>
-            <div>
-               <p className="label-md" style={{ marginBottom: '2rem' }}>Social</p>
-               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '0.9rem', opacity: 0.8 }}>
-                  <li><Link href="#">Instagram</Link></li>
-                  <li><Link href="#">LinkedIn</Link></li>
-                  <li><Link href="#">Pinterest</Link></li>
-               </ul>
-            </div>
-         </div>
-         <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-            <p style={{ opacity: 0.4, fontSize: '0.7rem', letterSpacing: '0.2em' }}>
-              © {new Date().getFullYear()} ROOP STONE ARTS. ALL RIGHTS RESERVED.
-            </p>
-         </div>
-      </footer>
+            <Link className="btn-ghost" href="/how-it-works">Our Process →</Link>
+          </Reveal>
+          <Reveal delay={200}>
+            <InquiryForm variant="consultation" source="consultation" />
+          </Reveal>
+        </div>
+      </section>
     </main>
   );
 }
