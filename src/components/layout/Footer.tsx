@@ -33,28 +33,6 @@ export default function Footer() {
             Where Stones Become Poetry. Three decades of marble mastery from Makrana, Rajasthan.
           </p>
         </div>
-        <FooterColumn
-          title="Explore"
-          links={[
-            ["About", "/about-us"],
-            ["Sparsh", "/sparsh"],
-            ["IRA", "/ira"],
-            ["Creations", "/creations"],
-            ["Estimator", "/price-estimator"],
-            ["Journal", "/journal"],
-            ["Contact", "/contact"],
-          ]}
-        />
-        <FooterColumn
-          title="Ateliers & Services"
-          links={[
-            ["Our Services", "/services"],
-            ["How It Works", "/how-it-works"],
-            ["Legacy Works", "/legacy-works"],
-            ["Testimonials", "/testimonials"],
-            ["FAQ", "/faq"],
-          ]}
-        />
         <div>
           <h3 style={footerTitleStyle}>Connect</h3>
           <ul style={footerListStyle}>
