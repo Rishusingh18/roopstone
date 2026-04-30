@@ -34,39 +34,7 @@ export default function CreationsBrowser({ creations }: CreationsBrowserProps) {
 
   return (
     <>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.8rem", marginBottom: "2rem" }}>
-        {categories.map((item) => (
-          <button
-            key={item}
-            data-testid={`filter-cat-${item}`}
-            onClick={() => setCategory(item)}
-            className={category === item ? "btn-primary" : "btn-ghost"}
-            style={{ padding: "0.72rem 1.1rem", cursor: "pointer" }}
-          >
-            {item}
-          </button>
-        ))}
-      </div>
 
-      <div className="mobile-stack" style={{ display: "grid", gridTemplateColumns: "260px 1fr", gap: "1.2rem", marginBottom: "4rem" }}>
-        <div className="field">
-          <label>Material</label>
-          <select data-testid="filter-material" value={material} onChange={(event) => setMaterial(event.target.value)}>
-            {materials.map((item) => (
-              <option key={item}>{item}</option>
-            ))}
-          </select>
-        </div>
-        <div className="field">
-          <label>Search</label>
-          <input
-            data-testid="filter-search"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search by stone, collection, or form"
-          />
-        </div>
-      </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "2rem" }}>
         {filtered.map((creation, index) => (

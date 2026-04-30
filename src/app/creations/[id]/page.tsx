@@ -40,7 +40,11 @@ export default async function CreationDetailPage({ params }: CreationDetailPageP
           <Link className="btn-ghost" href="/creations">← Back to Archive</Link>
         </Reveal>
         <Reveal delay={180}>
-          <div className="tile-radius kenburns" style={{ minHeight: "72vh", backgroundImage: `url('${creation.image}')`, backgroundSize: "cover", backgroundPosition: "center", boxShadow: "0 50px 120px rgba(30,28,18,0.12)" }} />
+          <div style={{ display: "grid", gap: "2rem" }}>
+            {(creation.images || [creation.image]).map((img, idx) => (
+              <div key={idx} className="tile-radius kenburns" style={{ minHeight: "72vh", backgroundImage: `url('${img}')`, backgroundSize: "cover", backgroundPosition: "center", boxShadow: "0 50px 120px rgba(30,28,18,0.12)" }} />
+            ))}
+          </div>
         </Reveal>
       </section>
 
