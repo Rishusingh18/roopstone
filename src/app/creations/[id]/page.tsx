@@ -25,24 +25,35 @@ export default async function CreationDetailPage({ params }: CreationDetailPageP
   if (!creation) notFound();
 
   return (
-    <main data-testid="creation-detail-main" style={{ minHeight: "100vh", background: "var(--color-background)", paddingTop: "9rem", overflow: "hidden" }}>
-      <section className="section-pad responsive-grid-2">
+    <main data-testid="creation-detail-main" style={{ minHeight: "100vh", background: "var(--color-background)", paddingTop: "7rem", overflow: "hidden" }}>
+      <section className="section-pad" style={{ paddingTop: "2rem" }}>
         <Reveal>
-          <Ornament align="left" style={{ marginBottom: "1.2rem" }}>
-            {creation.collection} · {creation.category}
-          </Ornament>
-          <h1 style={{ marginBottom: "1.6rem" }}>{creation.name}</h1>
-          <p style={{ color: "var(--color-text-secondary)", fontSize: "1.15rem", lineHeight: 1.8, marginBottom: "2rem" }}>{creation.story}</p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.8rem", marginBottom: "2rem" }}>
-            <span className="chip">{creation.material}</span>
-            <span className="chip">{creation.price}</span>
+          <div style={{ textAlign: "center", maxWidth: 900, margin: "0 auto 4rem" }}>
+            <Ornament align="center" style={{ marginBottom: "1.2rem", justifyContent: "center" }}>
+              {creation.collection} · {creation.category}
+            </Ornament>
+            <h1 style={{ marginBottom: "1.2rem", fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}>{creation.name}</h1>
+            <p style={{ color: "var(--color-text-secondary)", fontSize: "1.15rem", lineHeight: 1.8 }}>
+              {creation.story}
+            </p>
           </div>
-          <Link className="btn-ghost" href="/creations">← Back to Archive</Link>
         </Reveal>
         <Reveal delay={180}>
-          <div style={{ display: "grid", gap: "2rem" }}>
+          <div style={{ 
+            display: "grid", 
+            gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", 
+            gap: "2rem", 
+            marginBottom: "2rem" 
+          }}>
             {(creation.images || [creation.image]).map((img, idx) => (
-              <div key={idx} className="tile-radius kenburns" style={{ minHeight: "72vh", backgroundImage: `url('${img}')`, backgroundSize: "cover", backgroundPosition: "center", boxShadow: "0 50px 120px rgba(30,28,18,0.12)" }} />
+              <div key={idx} className="tile-radius" style={{ overflow: "hidden", boxShadow: "0 50px 120px rgba(30,28,18,0.12)" }}>
+                <img 
+                  src={img} 
+                  alt={`${creation.name} - View ${idx + 1}`} 
+                  className="kenburns"
+                  style={{ width: "100%", height: "auto", display: "block", objectFit: "contain" }} 
+                />
+              </div>
             ))}
           </div>
         </Reveal>
@@ -53,6 +64,10 @@ export default async function CreationDetailPage({ params }: CreationDetailPageP
           <Reveal>
             <p className="brand-subtitle" style={{ color: "var(--color-royal)", marginBottom: "1rem" }}>Details</p>
             <h2 style={{ marginBottom: "2rem" }}>Measured for permanence.</h2>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.8rem", marginBottom: "2rem" }}>
+              <span className="chip">{creation.material}</span>
+              <span className="chip">{creation.price}</span>
+            </div>
             <div style={{ display: "grid", gap: "1rem" }}>
               {creation.specs.map((spec) => (
                 <div key={spec} className="glass-panel" style={{ borderRadius: 14, padding: "1.1rem 1.3rem", color: "var(--color-text-secondary)" }}>
@@ -64,6 +79,9 @@ export default async function CreationDetailPage({ params }: CreationDetailPageP
           <Reveal delay={180}>
             <InquiryForm variant="quote" source="gallery" includeProduct product={creation.name} title="Request This Piece" intro="Share your site, scale, and timeline. We will respond with availability and next steps." />
           </Reveal>
+        </div>
+        <div style={{ marginTop: "5rem", textAlign: "center" }}>
+          <Link className="btn-ghost" href="/creations">← Back to Archive</Link>
         </div>
       </section>
     </main>

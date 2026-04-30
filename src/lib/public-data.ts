@@ -17,7 +17,7 @@ export interface Creation {
 }
 
 export const navItems = [
-  { name: "About", href: "/about-us" },
+  { name: "About Us", href: "/about-us" },
   { name: "Contact", href: "/contact" },
 ];
 
