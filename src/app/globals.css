@@ -431,6 +431,66 @@ main {
   gap: 2rem;
 }
 
+/* ------------------------------------------------
+   Responsive Image Classes for Sections
+------------------------------------------------ */
+
+.hero-img-container {
+  position: absolute;
+  top: 12vh;
+  right: -4vw;
+  width: 58vw;
+  height: 78vh;
+  z-index: 0;
+  overflow: hidden;
+  border-top-left-radius: 140px;
+  border-bottom-right-radius: 140px;
+  background-image: url('/images/products/3.jpg');
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 40px 120px rgba(30,28,18,0.12);
+}
+
+.hero-img-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to left, transparent 0%, var(--color-background) 92%);
+  border-top-left-radius: 140px;
+  border-bottom-right-radius: 140px;
+}
+
+.collection-img {
+  height: 78vh;
+  background-image: url('/images/products/12.jpg');
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 50px 120px rgba(30,28,18,0.12);
+}
+
+.sparsh-img {
+  position: relative;
+  width: 100%;
+  height: 84vh;
+  overflow: hidden;
+  border-top-left-radius: 100px;
+  border-bottom-right-radius: 100px;
+  background-image: url('/images/products/4.jpg');
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 60px 160px rgba(30,28,18,0.15);
+}
+
+.sparsh-glass-panel {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  width: min(520px, calc(100% - 2rem));
+  transform: translateX(-50%);
+  padding: 2.4rem 3rem;
+  border-radius: 16px;
+  text-align: center;
+}
+
 @media (max-width: 900px) {
   h1 {
     font-size: clamp(2.7rem, 14vw, 4.6rem);
@@ -464,5 +524,35 @@ main {
 
   .mobile-hide {
     display: none !important;
+  }
+
+  .hero-img-container {
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    opacity: 0.2;
+    z-index: 0;
+  }
+
+  .hero-img-gradient {
+    background: linear-gradient(to top, var(--color-background) 0%, transparent 100%);
+    border-radius: 0;
+  }
+
+  .collection-img {
+    height: 50vh;
+  }
+
+  .sparsh-img {
+    height: 60vh;
+    border-top-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+  }
+
+  .sparsh-glass-panel {
+    bottom: 1.5rem;
+    padding: 1.5rem;
   }
 }

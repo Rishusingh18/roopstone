@@ -11,23 +11,9 @@ export default function Home() {
       <section className="section-pad-hero" style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}>
         <div
           aria-hidden="true"
-          style={{
-            position: "absolute",
-            top: "12vh",
-            right: "-4vw",
-            width: "58vw",
-            height: "78vh",
-            zIndex: 0,
-            overflow: "hidden",
-            borderTopLeftRadius: 140,
-            borderBottomRightRadius: 140,
-            backgroundImage: "url('/images/products/3.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            boxShadow: "0 40px 120px rgba(30,28,18,0.12)",
-          }}
+          className="hero-img-container"
         >
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to left, transparent 0%, var(--color-background) 92%)", borderTopLeftRadius: 140, borderBottomRightRadius: 140 }} />
+          <div className="hero-img-gradient" />
         </div>
         <div style={{ position: "relative", zIndex: 1, maxWidth: 860, marginTop: "8vh" }}>
           <Reveal>
@@ -117,7 +103,7 @@ export default function Home() {
       <section className="section-pad" style={{ background: "var(--color-background-alt)" }}>
         <div className="responsive-grid-2">
           <Reveal>
-            <div className="tile-radius" style={{ height: "78vh", backgroundImage: "url('/images/products/12.jpg')", backgroundSize: "cover", backgroundPosition: "center", boxShadow: "0 50px 120px rgba(30,28,18,0.12)" }} />
+            <div className="tile-radius collection-img" />
           </Reveal>
           <Reveal delay={200}>
             <p className="brand-subtitle" style={{ color: "var(--color-royal)", marginBottom: "1rem" }}>The Collection</p>
@@ -147,8 +133,8 @@ export default function Home() {
           </p>
         </Reveal>
         <Reveal delay={200}>
-          <div style={{ position: "relative", width: "100%", height: "84vh", overflow: "hidden", borderTopLeftRadius: 100, borderBottomRightRadius: 100, backgroundImage: "url('/images/products/4.jpg')", backgroundSize: "cover", backgroundPosition: "center", boxShadow: "0 60px 160px rgba(30,28,18,0.15)" }}>
-            <div className="glass-panel" style={{ position: "absolute", bottom: "3rem", left: "50%", width: "min(520px, calc(100% - 2rem))", transform: "translateX(-50%)", padding: "2.4rem 3rem", borderRadius: 16, textAlign: "center" }}>
+          <div className="sparsh-img">
+            <div className="glass-panel sparsh-glass-panel">
               <p className="brand-subtitle" style={{ color: "var(--color-royal)", marginBottom: "0.6rem" }}>Featured Project</p>
               <h3 style={{ marginBottom: "0.8rem", fontSize: "1.6rem" }}>The Temple at Ajmer</h3>
               <p style={{ marginBottom: "1.6rem", color: "var(--color-text-secondary)", fontSize: "0.92rem", lineHeight: 1.6 }}>A masterpiece in Makrana Pure White marble, hand-carved jaalis and floral motifs.</p>
